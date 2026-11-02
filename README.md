@@ -39,5 +39,5 @@
 
 ## 公開（2026-11-02）
 - 提案書 https://fullcale.github.io/jecom-demo/proposal.html ／ デモ https://fullcale.github.io/jecom-demo/
-- リポジトリ fullcale/jecom-demo（公開）。更新手順：`python tools/build.py` → commit → `git subtree split --prefix site -b gh-pages` → `git push -f origin gh-pages`
+- リポジトリ fullcale/jecom-demo（公開）。更新手順：`python tools/build.py` → commit → `git subtree split --prefix site -b gh-pages` → `git push origin gh-pages`（split は毎回同じ履歴になるので強制プッシュ不要）
 - 全ページnoindex＋robots.txt、上部に「提案用デモ・公式サイトではありません」の帯
