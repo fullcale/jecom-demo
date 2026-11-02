@@ -188,26 +188,53 @@ ICON = {
     "check": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 12l3 3 5-6"/></svg>',
 }
 
-def resources_html(cur):
-    items = [
-        ("asset/00032/pdf/gennchousinndann-4.pdf", "doc", "現調・診断 申込書ダウンロード", "制震オフィス化診断のお申し込みに"),
-        ("seishin/jikkendouga.html", "play", "制振器具の実験動画", "制振器具の効果を動画でご覧いただけます"),
-        ("partner2/index.html", "hand", "ビジネスパートナー募集", "販売代理店・施工代理店を募集中"),
-        ("contact.html", "mail", "お問い合わせ", "資料請求・お見積・診断のご相談"),
-        ("ichioshi.html", "food", "アレルギー対応・ハラール対応 3日分の水・食品セット", "今コレ！のおすすめ備蓄食"),
-        ("bousai-info.html", "map", "都道府県防災情報", "家具転倒防止の助成・啓発情報"),
-        ("http://www.fujilatex.co.jp/jp/", "factory", "不二ラテックス株式会社", "外部サイトへ移動します"),
-        ("annzen/selfcheck.html", "check", "室内安全対策セルフチェック", "オフィスの対策状況を自己診断"),
+def tiles_html(cur):
+    """現行サイドバナーを色分けした写真付きバナーに（現行の色分けを踏襲）"""
+    T = [
+        ("asset/00032/pdf/gennchousinndann-4.pdf", "t-rose", ("img", "asset/00032/seishin/sinndannkekkareport.jpg", True), "現調・診断 申込書ダウンロード", "制震オフィス化診断のお申し込みに（PDF）"),
+        ("seishin/jikkendouga.html", "t-apricot", ("play", "asset/00032/office/office_photo1.jpg", False), "制振器具の実験動画", "制振器具の効果を動画でご覧いただけます"),
+        ("partner2/index.html", "t-sky", ("img", "asset/00032/seishin/KTT-001J-1.jpg", False), "ビジネスパートナー募集", "販売代理店・施工代理店を募集中"),
+        ("contact.html", "t-butter", ("icon", "mail", None), "お問い合わせ", "資料請求・お見積・診断のご相談"),
+        ("ichioshi.html", "t-sage", ("img", "asset/00032/syouhin/Cube-Completed2_2402-2_2.jpg", True), "アレルギー対応・ハラール対応 3日分の水・食品セット", "今コレ！のおすすめ備蓄食"),
+        ("bousai-info.html", "t-sand", ("icon", "map", None), "都道府県防災情報", "家具転倒防止の助成・啓発情報"),
+        ("annzen/selfcheck.html", "t-mint", ("icon", "check", None), "室内安全対策セルフチェック", "オフィスの対策状況を自己診断"),
+        ("http://www.fujilatex.co.jp/jp/", "t-lilac", ("img", "asset/00032/side/side-banner.jpg", True), "不二ラテックス株式会社", "外部サイトへ移動します"),
     ]
-    cards = []
-    for href, ic, t, s in items:
+    out = []
+    for href, cls, (kind, src, contain), t, sub in T:
         ext = href.startswith("http")
         h = href if ext else rel(href, cur)
         tgt = ' target="_blank" rel="noopener"' if ext or href.endswith(".pdf") else ""
-        cards.append(f'<a class="res" href="{h}"{tgt}><span class="ic">{ICON[ic]}</span><span><b>{t}</b><small>{s}</small></span></a>')
+        if kind == "icon":
+            ph = f'<div class="ph"><span class="ic">{ICON[src]}</span></div>'
+        else:
+            ph = f'<div class="ph{" contain" if contain else ""}"><img src="{rel(src, cur)}" alt="" loading="lazy"></div>'
+            if kind == "play":
+                ph = ph[:-6] + f'<span class="play">{ICON["play"]}</span></div>'
+        out.append(f'<a class="tile {cls}" href="{h}"{tgt}>{ph}<div class="bd"><b>{t}</b><small>{sub}</small><span class="go">{"開く" if ext else "見る"} →</span></div></a>')
+    return f'<div class="tiles">{"".join(out)}</div>'
+
+def resources_html(cur):
     return f'''<section class="resources"><div class="container">
-<span class="eyebrow" style="color:var(--blue)">Resources</span><h2>資料・関連情報</h2>
-<div class="res-grid">{"".join(cards)}</div></div></section>'''
+<span class="eyebrow">Resources</span><h2>資料・関連情報</h2>
+{tiles_html(cur)}</div></section>'''
+
+def news_list_html(tid, cur):
+    """お知らせ／防災情報を全件（現行トップと同じくスクロールで全部見られる）"""
+    src = open(os.path.join(RAW, f"topic{tid}.html"), encoding="utf-8").read()
+    sp = BeautifulSoup(extract_main(src), "html.parser")
+    lis = []
+    seen = set()
+    for dt in sp.find_all("dt"):
+        ds = dt.find("span", class_="date")
+        date = ds.get_text(strip=True) if ds else ""
+        ttl = dt.find("strong").get_text(" ", strip=True) if dt.find("strong") else ""
+        did = dt.get("id", "")
+        if did in seen: did += "-2"
+        seen.add(did)
+        ttl, _ = apply_text_fixes(H.escape(ttl), f"topic{tid}.html")
+        lis.append(f'<li><a href="{rel(f"topic{tid}.html#{did}", cur)}"><span class="d">{date}</span><span class="t">{ttl}</span></a></li>')
+    return f'<ul class="scroll">{"".join(lis)}</ul>'
 
 def cta_html(cur):
     return f'''<section class="cta-band"><div class="container">
@@ -398,7 +425,7 @@ def convert(main_html, cur, soup_factory):
         src = f.get("src", "")
         if src.startswith("//"):
             src = "https:" + src
-        nf = soup.new_tag("iframe", attrs={"src": src, "title": "動画", "loading": "lazy", "allowfullscreen": "", "allow": "accelerometer; encrypted-media; gyroscope; picture-in-picture"})
+        nf = soup.new_tag("iframe", attrs={"src": src, "title": "動画", "loading": "lazy", "allowfullscreen": "", "allow": "accelerometer; encrypted-media; gyroscope; picture-in-picture", "referrerpolicy": "strict-origin-when-cross-origin"})
         w = soup.new_tag("div", attrs={"class": "video"}); w.append(nf)
         f.replace_with(w)
     # 表：レイアウト用か、データ表か
@@ -829,7 +856,8 @@ def build():
 def render_partial(body, cur):
     """partials 内の {{rel:path}} {{cta}} {{resources}} {{hero:...}} を展開"""
     body = re.sub(r"\{\{rel:([^}]+)\}\}", lambda m: rel(m.group(1), cur), body)
-    body = body.replace("{{cta}}", cta_html(cur)).replace("{{resources}}", resources_html(cur))
+    body = body.replace("{{cta}}", cta_html(cur)).replace("{{resources}}", resources_html(cur)).replace("{{tiles}}", tiles_html(cur))
+    body = re.sub(r"\{\{news:(\d)\}\}", lambda m: news_list_html(m.group(1), cur), body)
     body = body.replace("{{side}}", side_html(cur)).replace("{{hubcards}}", hub_cards(cur))
     body = re.sub(r"\{\{hero:([^|}]*)\|([^|}]*)\|?([^}]*)\}\}", lambda m: page_hero(cur, m.group(1), m.group(2), m.group(3)), body)
     return body

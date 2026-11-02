@@ -497,3 +497,84 @@ body{font-variant-numeric:lining-nums}
 .hero-visual .badge b{line-height:1;margin:2px 0}
 .demo-bar{background:#fff7d6;color:#6b5200;font-size:12.5px;text-align:center;padding:6px 16px;line-height:1.6;border-bottom:1px solid #f0e2a8}
 .demo-bar a{color:#6b5200;font-weight:700;margin:0 2px}
+
+/* ===== v4：スライドショー・色分けバナー・事例・動画 ===== */
+.slider{position:relative;overflow:hidden;border-radius:14px;background:#fff}
+.slider .slides{position:relative;aspect-ratio:var(--ar,16/10)}
+.slider .slides>*{position:absolute;inset:0;opacity:0;transition:opacity 1s ease;display:flex;align-items:center;justify-content:center}
+.slider .slides>*.on{opacity:1;z-index:1}
+.slider .slides img{width:100%;height:100%;object-fit:contain;border-radius:0;border:0}
+.slider .dots{position:absolute;left:0;right:0;bottom:10px;display:flex;gap:8px;justify-content:center;z-index:3}
+.slider .dots button{width:9px;height:9px;border-radius:50%;border:0;background:rgba(31,61,48,.25);cursor:pointer;padding:0;transition:.2s}
+.slider .dots button.on{background:var(--blue);width:24px;border-radius:5px}
+.slider .nav{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.9);box-shadow:var(--shadow-s);cursor:pointer;color:var(--blue-d);font-size:18px;opacity:0;transition:.2s}
+.slider:hover .nav{opacity:1}
+.slider .prev{left:10px}.slider .next{right:10px}
+.slider .cap{position:absolute;left:14px;top:12px;z-index:3;background:rgba(255,255,255,.92);color:var(--blue-d);font-size:12.5px;font-weight:700;padding:4px 12px;border-radius:999px;box-shadow:var(--shadow-s)}
+.article .slider{border:1px solid var(--line);margin:0 0 1.2em;max-width:520px}
+.article .slider .dots{bottom:8px}
+.hero-visual .main .slider{border-radius:10px}
+
+/* 色分けバナー */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.tile{position:relative;display:flex;flex-direction:column;border-radius:16px;overflow:hidden;text-decoration:none;color:var(--ink);background:var(--tc,#eef6f1);transition:.2s;min-height:100%}
+.tile:hover{transform:translateY(-3px);box-shadow:var(--shadow);color:var(--ink)}
+.tile .ph{height:120px;overflow:hidden;background:rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center}
+.tile .ph img{width:100%;height:100%;object-fit:cover;border-radius:0}
+.tile .ph.contain img{object-fit:contain;padding:8px}
+.tile .ph .ic{width:56px;height:56px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;color:var(--td,var(--blue))}
+.tile .ph .ic svg{width:28px;height:28px}
+.tile .bd{padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px;flex:1}
+.tile b{font-family:var(--head);font-size:15.5px;line-height:1.45;color:var(--td,var(--ink))}
+.tile small{font-size:12.5px;color:#5d6b64;line-height:1.55}
+.tile .go{margin-top:auto;padding-top:6px;font-size:12.5px;font-weight:700;color:var(--td,var(--blue))}
+.tile .play{position:absolute;left:50%;top:60px;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;color:#d0612a;box-shadow:var(--shadow-s)}
+.t-rose{--tc:#fbe9ee;--td:#b23a5c}
+.t-apricot{--tc:#fdeee0;--td:#b8571c}
+.t-sky{--tc:#e6f1fa;--td:#2a6aa6}
+.t-butter{--tc:#fcf4d9;--td:#9a7400}
+.t-sage{--tc:#e8f3ec;--td:#1f7a45}
+.t-sand{--tc:#f4ede2;--td:#7d5f36}
+.t-lilac{--tc:#efebf7;--td:#5e4b98}
+.t-mint{--tc:#e3f4f2;--td:#1f7c74}
+.resources .tiles{margin-top:6px}
+
+/* 設置事例（施工前→施工後） */
+.cases{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.case{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.case .ba{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--line)}
+.case .ba figure{margin:0;position:relative;background:#fff}
+.case .ba img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;border-radius:0}
+.case .ba figcaption{position:absolute;left:8px;top:8px;font-size:11px;font-weight:700;padding:2px 10px;border-radius:999px;background:rgba(255,255,255,.92);color:var(--muted)}
+.case .ba figure.after figcaption{background:var(--blue);color:#fff}
+.case .bd{padding:14px 18px 18px;font-size:14px}
+.case .bd b{display:block;color:var(--ink);font-family:var(--head);font-size:15.5px;margin-bottom:2px}
+.case .bd span{color:var(--muted)}
+.case-meta{display:flex;gap:16px;align-items:center;margin:0 0 22px;flex-wrap:wrap}
+.case-meta img{width:120px;height:90px;object-fit:cover;border-radius:12px}
+.case-meta p{margin:0;color:var(--muted);font-size:14.5px}
+.case-meta b{color:var(--ink);font-family:var(--head);font-size:17px;display:block}
+
+/* 動画 */
+.videos{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.videos figure{margin:0}
+.videos figcaption{margin-top:10px;font-weight:700;color:var(--ink);font-family:var(--head)}
+.videos figcaption small{display:block;font-weight:500;color:var(--muted);font-family:"Noto Sans JP",sans-serif}
+
+/* お知らせ：全件スクロール */
+.news-box ul.scroll{max-height:330px;overflow-y:auto;padding-right:8px;scrollbar-width:thin}
+.pillar .head{display:flex;gap:14px;align-items:center;margin-bottom:12px;position:relative;z-index:1}
+.pillar .head img{width:56px;height:56px;border-radius:14px;object-fit:cover;flex:0 0 56px;box-shadow:var(--shadow-s)}
+.pillar .head h3{margin:0;padding-right:40px}
+@media (max-width:1080px){.tiles{grid-template-columns:repeat(3,1fr)}.cases{grid-template-columns:1fr 1fr}}
+@media (max-width:900px){.videos,.cases{grid-template-columns:1fr}.tiles{grid-template-columns:repeat(2,1fr)}.slider .nav{opacity:1}}
+@media (max-width:560px){.tile .ph{height:96px}.tile .play{top:48px}}
+.row>.cell:has(>.slider){flex:0 0 min(440px,46%);max-width:min(440px,46%)}
+.slider{width:100%}
+@media (max-width:900px){.row>.cell:has(>.slider){flex:1 1 auto;max-width:100%}}
+.case .ba{grid-template-columns:1fr;gap:0;background:#fff}
+.case .ba img{aspect-ratio:auto;object-fit:contain;height:auto}
+.case .ba figure{padding:8px 8px 0}
+.case .ba figure+figure{border-top:1px dashed var(--line);margin-top:8px;padding-top:12px}
+.case .ba figcaption{left:14px;top:14px}
+.case .ba figure+figure figcaption{top:18px}
