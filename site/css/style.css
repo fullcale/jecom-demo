@@ -482,8 +482,12 @@ a:hover{color:var(--blue-d)}
 @media (max-width:900px){
   .site-header .container{height:68px}
   .logo img{height:46px}
-  .gnav{inset:68px 0 0 0}
+  .gnav{inset:68px 0 0 0;top:var(--nav-top,68px)}
+  /* backdrop-filterがあると固定配置のメニューがヘッダー内に閉じ込められ1項目しか見えなくなる */
+  .site-header{backdrop-filter:none;background:#fff}
   .hero .container{padding:36px 0 64px}
+  /* 中央寄せ(margin:auto)だと中身が絶対配置のスライドが幅0に潰れる */
+  .hero-visual{width:100%}
   .sec{padding:52px 0}
 }
 body{font-variant-numeric:lining-nums}
