@@ -141,9 +141,8 @@ TODO_MARK = [
 ]
 
 # ---------------------------------------------------------------- 共通部品
-# B案（動きのあるデザイン）は全ページを site/b/ に同じパスで出力する。画像・CSS・JS・提案書は A案のものを共用
-VARIANT = "a"
-SHARED = ("asset/", "img/", "css/", "js/", "proposal.html")
+# 動きのあるデザイン（2026-11-02 オーナー決定で一本化）。False にすると動きなしの落ち着いた版（旧A案）を出力する
+MOTION = True
 GSAP = "https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist"
 
 def rel(target, cur):
@@ -154,10 +153,6 @@ def rel(target, cur):
         frag = "#" + frag
     if target == "":
         return frag
-    if VARIANT == "b":
-        cur = "b/" + cur
-        if not target.startswith(SHARED):
-            target = "b/" + target
     cur_dir = os.path.dirname(cur)
     r = os.path.relpath(target, cur_dir or ".").replace("\\", "/")
     return r + frag
@@ -266,7 +261,7 @@ def footer_html(cur):
     cols = [cols[0], cols[1], cols[2], cols[3] + cols[4] + cols[5]]
     cols = [cols[0], cols[1], cols[2], f'<div>{cols[3]}</div>']
     words = "".join(f"<span>{w}</span>" for w in ["Office Safety for Earthquakes", "JECOM", "Seismic Office", "Japan Eco Communications"] * 2)
-    marquee = f'<div class="b-bigtext" aria-hidden="true"><div>{words}</div></div>' if VARIANT == "b" else ""
+    marquee = f'<div class="b-bigtext" aria-hidden="true"><div>{words}</div></div>' if MOTION else ""
     return marquee + f'''<footer class="site-footer"><div class="container">
 <div class="f-top"><div class="f-brand"><span class="logo-box"><img src="{rel("img/logo.png", cur)}" alt="JECOM ジェコム株式会社"></span>
 <p><b>JECOM株式会社</b><br>〒340-0011　埼玉県草加市栄町2-11-3-203<br>TEL：{TEL}　FAX：{FAX}<br>営業時間：{HOURS}</p></div>
@@ -277,10 +272,7 @@ def footer_html(cur):
 
 def page_shell(cur, title, desc, body, extra_head=""):
     d = H.escape(desc or "", quote=True)
-    # A案⇔B案を同じページで切り替えるリンク
-    if VARIANT == "b":
-        other = os.path.relpath(cur, os.path.dirname("b/" + cur) or ".").replace("\\", "/")
-        variant_link = f'<b>B案（動きのあるデザイン）</b>を表示中 → <a href="{other}">A案を見る</a>／'
+    if MOTION:
         b_head = f'''
 <link rel="stylesheet" href="{rel("css/b.css", cur)}">
 <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){{document.documentElement.classList.add('anim');setTimeout(function(){{if(!window.__bOK)document.documentElement.classList.remove('anim')}},4000)}}</script>'''
@@ -289,10 +281,9 @@ def page_shell(cur, title, desc, body, extra_head=""):
 <script src="{GSAP}/ScrollTrigger.min.js"></script>
 <script src="{rel("js/b.js", cur)}"></script>'''
     else:
-        variant_link = f'<a href="{rel("b/" + cur, cur)}">B案（動きのあるデザイン）を見る</a>／'
         b_head = b_tail = ""
     return f'''<!DOCTYPE html>
-<html lang="ja"{' class="b"' if VARIANT == "b" else ""}><head>
+<html lang="ja"{' class="b"' if MOTION else ""}><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
@@ -305,7 +296,7 @@ def page_shell(cur, title, desc, body, extra_head=""):
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Shippori+Mincho+B1:wght@600;700&family=Noto+Sans+JP:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{rel("css/style.css", cur)}">{b_head}{extra_head}
 </head><body id="top">
-<div class="demo-bar">これはJECOM株式会社様へのホームページリニューアル提案用のデモです（公式サイトではありません）。{variant_link}<a href="https://www.jecom.jp/" target="_blank" rel="noopener">公式サイト</a>／<a href="{rel("proposal.html", cur)}">提案書</a></div>
+<div class="demo-bar">これはJECOM株式会社様へのホームページリニューアル提案用のデモです（公式サイトではありません）。<a href="https://www.jecom.jp/" target="_blank" rel="noopener">公式サイト</a>／<a href="{rel("proposal.html", cur)}">提案書</a></div>
 {header_html(cur)}
 <main>
 {body}
@@ -864,7 +855,7 @@ def build():
             body = page_hero(path, title, en_label(path), kicker) + \
                 f'<div class="container layout">{side_html(path)}<article class="article">{html}</article></div>' + \
                 cta_html(path) + resources_html(path)
-        out = os.path.join(OUT, "b" if VARIANT == "b" else "", path)
+        out = os.path.join(OUT, path)
         os.makedirs(os.path.dirname(out), exist_ok=True)
         open(out, "w", encoding="utf-8").write(page_shell(path, ptitle, desc, body))
         written.append(path)
@@ -876,7 +867,13 @@ def build():
     for page, s in TODO_MARK:
         if s not in used:
             print("!! TODO not applied:", page, s)
-    print(len(written), "pages written", "(B案 site/b/)" if VARIANT == "b" else "")
+    # 一時公開していたB案のURL（/b/...）は同じページへ転送する
+    for path in written:
+        stub = os.path.join(OUT, "b", path)
+        os.makedirs(os.path.dirname(stub), exist_ok=True)
+        to = os.path.relpath(path, os.path.dirname("b/" + path)).replace("\\", "/")
+        open(stub, "w", encoding="utf-8").write(f'''<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta http-equiv="refresh" content="0;url={to}"><link rel="canonical" href="{to}"><title>移動しました</title><script>location.replace("{to}"+location.hash)</script></head><body><a href="{to}">こちらへ移動しました</a></body></html>''')
+    print(len(written), "pages written")
 
 def render_partial(body, cur):
     """partials 内の {{rel:path}} {{cta}} {{resources}} {{hero:...}} を展開"""
@@ -888,6 +885,4 @@ def render_partial(body, cur):
     return body
 
 if __name__ == "__main__":
-    build()
-    VARIANT = "b"
     build()

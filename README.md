@@ -7,10 +7,11 @@
   - URLは現行と同じパス（`office.html`, `shouhinn/damper.html` など）。お知らせ `/topic?id=1` は `topic1.html`、防災情報 `/topic?id=2` は `topic2.html`
   - `asset/` は現行サイトからダウンロードした画像・PDF（116MB）
   - 全ページ noindex
-- **B案**（`site/b/`）… 同じ中身に動きを加えた案。`build.py` が A案に続けて `VARIANT = "b"` で全83ページを `site/b/` に同じパスで出力する（`rel()` が B案のページ同士をつなぎ、`asset/` `img/` `css/` `js/` 提案書は A案のものを共用）。各ページ上部の帯で同じページのまま A⇔B を切り替えられる
-  - 動き：`site/css/b.css`、`site/js/b.js`（GSAP＋ScrollTrigger をCDNから読み込み）。トップは「写真が揺れて、ダンパーが効いたように止まる」＋地震計の波形、初回だけオープニング。数字カウントアップ、見出しの1文字ずつ表示、写真が窓から広がる、Before→Afterのワイプ、ヘッダーの出し入れ、スクロール量のバー、足元の流れる文字
+- **動き**（2026-11-02 オーナー決定で動きのあるデザインに一本化）：`site/css/b.css`、`site/js/b.js`（GSAP＋ScrollTrigger をCDNから読み込み）。`build.py` の `MOTION = False` で動きなしの落ち着いた版（旧A案）を出力できる
+  - トップは「写真が揺れて、ダンパーが効いたように止まる」＋地震計の波形、初回だけオープニング。数字カウントアップ、見出しの1文字ずつ表示、写真が窓から広がる、Before→Afterのワイプ、ヘッダーの出し入れ、スクロール量のバー、足元の流れる文字
   - 「視差効果を減らす」設定の人には動かさない。CDNが読めない／JSが失敗しても4秒で中身を表示する（headのタイマー）
   - ヘッダーに transform / backdrop-filter を付けっぱなしにしない（スマホメニューが閉じ込められる。b.css は隠す時だけ transform）
+  - `site/b/` は一時公開していたB案URLの転送用（同じページへ移動するだけ）
 - `raw/` … 現行サイトのクロール結果（`pages/`=HTML、`extract/`=本文テキスト）、スクリーンショット、検証レポート
 - `tools/`
   - `crawl.py` 現行サイトの全ページ取得 → `extract.py` 本文テキスト化
