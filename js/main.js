@@ -1,7 +1,7 @@
 (function(){
   var b=document.body;
   var mb=document.querySelector('.menu-btn');
-  if(mb){mb.addEventListener('click',function(){b.classList.toggle('nav-open');mb.setAttribute('aria-expanded',b.classList.contains('nav-open'));});}
+  if(mb){mb.addEventListener('click',function(){var h=document.querySelector('.site-header');if(h)b.style.setProperty('--nav-top',Math.max(0,h.getBoundingClientRect().bottom)+'px');b.classList.toggle('nav-open');mb.setAttribute('aria-expanded',b.classList.contains('nav-open'));});}
   // スマホではメニュー項目タップでサブメニュー開閉
   document.querySelectorAll('.gnav>.item>a').forEach(function(a){
     a.addEventListener('click',function(e){

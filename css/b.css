@@ -1,0 +1,74 @@
+/* B案：動きのあるデザイン。style.css の上に重ねる（動きは js/b.js） */
+
+/* GSAPが動かす前に一瞬見えてしまうのを防ぐ（GSAPが読めなければ b.js / headのタイマーが anim を外す） */
+html.anim .hero .container>div:first-child,
+html.anim .hero-visual{visibility:hidden}
+
+/* A案のふわっと表示は使わず、GSAPに任せる */
+.b .reveal{opacity:1;transform:none;transition:none}
+
+/* ---------- スクロール量のバー ---------- */
+.b-progress{position:fixed;left:0;top:0;height:3px;width:100%;background:linear-gradient(90deg,var(--blue),#5cc489);transform-origin:0 50%;transform:scaleX(0);z-index:200;pointer-events:none}
+
+/* ---------- ヘッダー：下にスクロールで隠れ、上に戻すと出る ---------- */
+/* transform は「隠す時だけ」付ける。付けっぱなしだとスマホメニュー（固定配置）がヘッダー内に閉じ込められる */
+.b .site-header{transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .3s}
+.b .site-header.is-hidden{transform:translateY(-100%)}
+.b .site-header.is-scrolled{box-shadow:0 10px 30px -18px rgba(31,61,48,.35)}
+
+/* ---------- オープニング（トップ・初回だけ） ---------- */
+.b-open{position:fixed;inset:0;z-index:300;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px}
+.b-open img{width:min(240px,56vw);opacity:0;transform:translateY(14px)}
+.b-open svg{width:min(320px,72vw);height:60px;overflow:visible}
+.b-open path{fill:none;stroke:var(--blue);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- ヒーロー ---------- */
+.b .hero{overflow:hidden}
+.b .hero::before{background:
+  radial-gradient(520px 380px at var(--gx,80%) var(--gy,25%),rgba(255,255,255,.95),transparent 70%),
+  radial-gradient(640px 420px at 10% 110%,rgba(26,138,76,.14),transparent 70%)}
+.b .hero h1 .ch{display:inline-block;will-change:transform}
+.b .hero h1 .ln{display:inline-block;overflow:hidden;vertical-align:top;padding:0 .04em .08em}
+/* 地震計の波形（揺れて、収まる） */
+.b .hero .container{padding-bottom:128px}
+.b .hero .btns .btn-ghost{background:#fff}
+.b-wave{position:absolute;left:0;right:0;bottom:50px;height:60px;z-index:0;pointer-events:none;opacity:.55}
+.b-wave svg{width:100%;height:100%;display:block;overflow:visible}
+.b-wave path{fill:none;stroke:var(--blue);stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
+/* 写真の後ろに広がる揺れの輪 */
+.b-ripple{position:absolute;left:50%;top:50%;width:60%;aspect-ratio:1;border-radius:50%;border:1.5px solid rgba(26,138,76,.35);transform:translate(-50%,-50%) scale(.4);opacity:0;z-index:-1;pointer-events:none}
+.b .hero-visual .main{will-change:transform}
+
+/* スライドの写真がゆっくり寄る */
+.b .hero-visual .slides>* img{transform:scale(1);transition:transform 6s ease-out}
+.b .hero-visual .slides>*.on img{transform:scale(1.06)}
+
+/* ---------- 見出し ---------- */
+.b .eyebrow .ch{display:inline-block}
+.b .sec-head h2,.b .page-hero h1{will-change:clip-path,transform}
+.b .page-hero h1 .ch{display:inline-block}
+
+/* ---------- カード：触ると浮く・写真が寄る ---------- */
+.b .prod,.b .pillar,.b .tile,.b .card,.b .case,.b .path{transition:transform .5s cubic-bezier(.2,.7,.2,1),box-shadow .5s}
+.b .prod:hover,.b .tile:hover,.b .card:hover{transform:translateY(-6px);box-shadow:0 26px 50px -26px rgba(31,61,48,.4)}
+.b .prod .pi,.b .pillar .head,.b .tile .ph,.b .card .thumb,.b .path .ph{overflow:hidden}
+.b .prod .pi img,.b .pillar .head img,.b .tile .ph img,.b .card .thumb img,.b .path .ph img{transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.b .prod:hover .pi img,.b .pillar:hover .head img,.b .tile:hover .ph img,.b .card:hover .thumb img,.b .path:hover .ph img{transform:scale(1.07)}
+.b .btn .arr{display:inline-block;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+.b .btn:hover .arr{transform:translateX(5px)}
+
+/* ---------- 足元の大きな流れる文字 ---------- */
+.b-bigtext{overflow:hidden;background:var(--bg);padding:26px 0 18px;white-space:nowrap;user-select:none}
+.b-bigtext>div{display:inline-flex;animation:bMarquee 40s linear infinite}
+.b-bigtext span{font-family:var(--num);font-style:italic;font-weight:600;font-size:clamp(44px,8vw,112px);line-height:1;color:transparent;-webkit-text-stroke:1px rgba(26,138,76,.35);padding:0 .45em}
+.b-bigtext span:nth-child(2n){color:rgba(26,138,76,.12);-webkit-text-stroke:0}
+@keyframes bMarquee{to{transform:translateX(-50%)}}
+
+@media (max-width:900px){
+  .b .hero .container{padding-bottom:110px}
+  .b-wave{bottom:50px;height:46px}
+}
+@media (prefers-reduced-motion:reduce){
+  .b-bigtext>div{animation:none}
+  .b .hero-visual .slides>* img{transition:none;transform:none}
+}
