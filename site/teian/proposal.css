@@ -1,0 +1,156 @@
+/* 提案書（tools/new_proposal.py が proposal/ にコピーする）。スマホで上から読む1枚。
+   見た目は ZEIRA のホームページ（zeira-site/css/zeira.css）にそろえる：黒い太字・虹色の差し色・黒い丸ボタン。
+   文字は薄くしない（灰色の細い文字は読まれない＝2026-11-16 オーナー確認） */
+:root {
+  --bg: #fbfbfd;
+  --paper: #ffffff;
+  --ink: #0b0f19;
+  --text: #1f2430;
+  --sub: #3d4352;
+  --line: rgba(11, 15, 25, .10);
+  --blue: #2350ff;
+  --violet: #7a5cff;
+  --ok: #0a8a5c;
+  --ok-bg: #e9f8f1;
+  --holo: linear-gradient(100deg, #12bfff 0%, #2350ff 34%, #7a5cff 66%, #ff6fb1 100%);
+  --shadow: 0 24px 60px -28px rgba(20, 30, 70, .30), 0 2px 6px -2px rgba(20, 30, 70, .08);
+  --gut: 16px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", sans-serif;
+  font-weight: 500; font-size: 16px; line-height: 1.85; padding-bottom: 84px;
+  overflow-x: hidden;
+}
+img { max-width: 100%; display: block; }
+h1, h2, h3 { color: var(--ink); line-height: 1.45; margin: 0 0 .6em; font-weight: 900; letter-spacing: .01em; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.12rem; font-weight: 700; }
+p { margin: 0 0 1em; }
+a { color: var(--blue); }
+strong { color: var(--ink); font-weight: 700; }
+.small { font-size: .86rem; }
+section, .foot { padding: 0 var(--gut); max-width: 720px; margin: 0 auto; }
+section { padding-top: 56px; }
+.holo { background: var(--holo); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* 上の帯 */
+.top { background: rgba(251, 251, 253, .92); border-bottom: 1px solid var(--line); }
+.top-in { max-width: 720px; margin: 0 auto; padding: 14px var(--gut); display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.top p { margin: 0; font-size: .85rem; font-weight: 700; color: var(--ink); }
+.logo { height: 20px; width: auto; display: block; }
+
+/* 表紙 */
+/* 表紙の背景のぼかしは body に置く（画面の幅いっぱい・はみ出しなし） */
+body { background:
+  radial-gradient(520px 420px at 88% 260px, rgba(122, 92, 255, .15), transparent 70%) no-repeat,
+  radial-gradient(480px 380px at 8% 160px, rgba(18, 191, 255, .13), transparent 70%) no-repeat,
+  radial-gradient(460px 360px at 70% 760px, rgba(255, 111, 177, .10), transparent 70%) no-repeat,
+  var(--bg); }
+.hero { padding-top: 36px; }
+.to { display: inline-block; font-weight: 700; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 99px; padding: 4px 16px; margin-bottom: 16px; }
+.hero h1 { font-size: clamp(1.75rem, 7.4vw, 2.6rem); }
+.lead { color: var(--text); }
+
+/* 新しいデザインを大きく、今のサイトは小さく横に */
+.show { display: grid; grid-template-columns: 34% 1fr; gap: 14px; align-items: end; margin: 28px 0 22px; }
+.show figure { margin: 0; text-align: center; }
+.show a { text-decoration: none; display: block; position: relative; }
+.phone { border-radius: 18px; overflow: hidden; aspect-ratio: 390 / 760; background: #fff; }
+.phone img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.old .phone { border: 5px solid #3a3f4a; border-radius: 16px; }
+.new .frame { padding: 4px; border-radius: 26px; background: var(--holo); box-shadow: 0 30px 60px -24px rgba(35, 80, 255, .45); }
+.new .phone { border: 5px solid var(--ink); border-radius: 22px; }
+figcaption { font-size: .86rem; font-weight: 700; margin-top: 10px; color: var(--sub); }
+.new figcaption { color: var(--ink); font-size: .95rem; }
+.tap { position: absolute; left: 50%; top: 58%; transform: translateX(-50%); background: var(--ink); color: #fff; font-size: .85rem; font-weight: 700; padding: 8px 18px; border-radius: 99px; white-space: nowrap; box-shadow: 0 8px 20px rgba(11, 15, 25, .35); }
+.note { font-size: .88rem; color: var(--sub); margin-top: 14px; }
+
+/* ボタン */
+.btn { display: block; text-align: center; text-decoration: none; font-weight: 700; padding: 16px 20px; border-radius: 99px; margin: 12px 0; min-height: 52px; line-height: 1.5; }
+.btn small { display: block; font-size: .78rem; font-weight: 700; opacity: .85; }
+.btn-main { background: var(--ink); color: #fff; font-size: 1.08rem; box-shadow: 0 14px 30px -12px rgba(35, 80, 255, .55); }
+.btn-sub { background: var(--paper); color: var(--ink); border: 2px solid var(--ink); }
+.btn-light { background: #fff; color: var(--ink); margin-bottom: 0; }
+
+/* 問題点 */
+.issues h2 .num { display: inline-block; margin: 0 .15em; font-size: 2em; line-height: 1; vertical-align: -.08em; background: var(--holo); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.issues h2 .num small { font-size: .5em; }
+.card { background: var(--paper); border: 1px solid var(--line); border-radius: 20px; padding: 20px 18px 8px; margin: 0 0 18px; box-shadow: var(--shadow); scroll-margin-top: 16px; }
+.card-head { display: flex; align-items: center; gap: 10px; margin: 0 0 8px; }
+.card-no { font-weight: 900; color: #fff; background: var(--holo); border-radius: 99px; padding: 1px 12px; font-size: .9rem; letter-spacing: .04em; }
+.card-tag { font-size: .8rem; font-weight: 700; color: var(--sub); border: 1px solid var(--line); border-radius: 99px; padding: 1px 10px; }
+.card h3 { font-size: 1.15rem; }
+.card-shot { margin: 0 0 16px; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #f3f4f8; max-height: 420px; }
+.card-shot img { width: 100%; }
+.card dl { margin: 0; }
+.card dt { font-size: .82rem; font-weight: 700; color: var(--sub); }
+.card dd { margin: 0 0 12px; color: var(--text); }
+.card dt.fix { color: var(--ok); }
+.card dd.fix { background: var(--ok-bg); color: var(--ink); border-radius: 10px; padding: 10px 14px; font-weight: 700; }
+
+.more { margin-top: 8px; }
+.more summary { list-style: none; cursor: pointer; display: block; text-align: center; font-weight: 700; color: var(--ink); background: var(--paper); border: 2px solid var(--ink); border-radius: 99px; padding: 14px 20px; }
+.more summary::-webkit-details-marker { display: none; }
+.more summary span::after { content: " ＋"; }
+.more[open] summary span::after { content: " －"; }
+.more[open] summary { margin-bottom: 8px; }
+.group { margin: 32px 0 14px; }
+.group h3 { font-size: 1.2rem; font-weight: 900; margin-bottom: .2em; }
+.group p { color: var(--sub); margin: 0; }
+
+/* 乗り換え */
+.checks { list-style: none; padding: 0; margin: 0; }
+.checks li { position: relative; padding-left: 2em; margin-bottom: .9em; }
+.checks li::before { content: "✓"; position: absolute; left: 0; top: .2em; width: 1.4em; height: 1.4em; border-radius: 50%; background: var(--ok-bg); color: var(--ok); font-weight: 900; font-size: .9em; display: grid; place-items: center; line-height: 1; }
+
+/* 料金（大事な数字だけ。くわしい条件は ZEIRA のホームページ） */
+.price { background: var(--ink); color: #e9ebf2; border-radius: 24px; padding: 28px 20px 22px; position: relative; overflow: hidden; }
+.price::before { content: ""; position: absolute; inset: 0 0 auto; height: 4px; background: var(--holo); }
+.price h2 { color: #fff; }
+.price-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.price-row > div { background: rgba(255, 255, 255, .07); border: 1px solid rgba(255, 255, 255, .12); border-radius: 16px; padding: 14px 14px 12px; }
+.price-k { margin: 0; font-size: .85rem; font-weight: 700; color: #c9cde0; }
+.price-v { margin: 0; font-size: clamp(1.5rem, 6.6vw, 2rem); font-weight: 900; color: #fff; line-height: 1.3; white-space: nowrap; }
+.price-inc { color: #e9ebf2; }
+.price-inc strong { color: #fff; }
+.price-mkt { font-size: .85rem; color: #c9cde0; }
+
+/* 進め方 */
+.steps ol { list-style: none; counter-reset: s; padding: 0; margin: 0; }
+.steps li { counter-increment: s; position: relative; padding: 0 0 20px 50px; }
+.steps li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 36px; height: 36px; border-radius: 50%; background: var(--ink); color: #fff; font-weight: 900; display: grid; place-items: center; }
+.steps li:first-child::before { background: var(--holo); }
+.steps li strong, .steps li span { display: block; }
+.steps li span { color: var(--sub); font-size: .92rem; }
+
+/* 最後のお願い */
+.cta { background: var(--paper); border-radius: 24px; box-shadow: var(--shadow); border: 1px solid var(--line); padding: 32px 18px 22px; margin-top: 56px; max-width: 688px; }
+@media (max-width: 720px) { .cta { margin-left: var(--gut); margin-right: var(--gut); } }
+.cta h2 { text-align: center; }
+
+.foot { padding-top: 40px; padding-bottom: 40px; color: var(--sub); font-size: .9rem; }
+.foot .logo { height: 16px; margin-bottom: 14px; }
+
+/* スマホの下に出すボタン（表紙のボタンを過ぎてから出す） */
+.bar { position: fixed; left: 0; right: 0; bottom: 0; display: flex; gap: 8px; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: rgba(251, 251, 253, .96); border-top: 1px solid var(--line); z-index: 10; transition: transform .25s ease; }
+.bar.off { transform: translateY(110%); }
+.bar a { flex: 1; text-align: center; text-decoration: none; font-weight: 700; padding: 13px 8px; border-radius: 99px; border: 2px solid var(--ink); color: var(--ink); font-size: .95rem; }
+.bar a.demo { background: var(--ink); color: #fff; }
+
+/* パソコン：表紙を広く使う */
+@media (min-width: 900px) {
+  section, .foot, .top-in { max-width: 820px; }
+  .cta { max-width: 788px; }
+  .show { grid-template-columns: 30% 1fr; gap: 28px; max-width: 620px; margin-left: auto; margin-right: auto; }
+  .btn { max-width: 440px; margin-left: auto; margin-right: auto; }
+  .card-shot { max-width: 460px; }
+  .bar { justify-content: center; }
+  .bar a { flex: 0 0 280px; }
+}
+.nw { white-space: nowrap; }
+.issues h2 .num { margin-left: 0; }
+/* 最後の1文字だけが次の行に落ちる改行を防ぐ（Safari 17.4 以降・Chrome） */
+p, dd, li, h2, h3, figcaption { text-wrap: pretty; }
