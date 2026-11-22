@@ -8,7 +8,7 @@
 <title>JECOM株式会社様 ホームページのご提案｜ZEIRA</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="proposal.css">
+<link rel="stylesheet" href="proposal.css?v=97bdfaea">
 </head>
 <body>
 <header class="top"><div class="top-in"><svg class="logo" viewBox="0 0 236 40" role="img" aria-label="ZEIRA"><defs><linearGradient id="zg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#12bfff"/><stop offset=".4" stop-color="#2350ff"/><stop offset=".75" stop-color="#7a5cff"/><stop offset="1" stop-color="#ff6fb1"/></linearGradient></defs><path fill="url(#zg)" d="M5 5h30v6.4H5zM27.2 13.6H35L12.8 26.4H5zM5 28.6h30V35H5z"/><g transform="translate(54 0)"><path fill="#0b0f19" d="M0 0h34v6H0zM26 6h8L8 34H0zM0 34h34v6H0zM46 0h28v6H46zM46 17h22v6H46zM46 34h28v6H46zM86 0h6v40h-6zM104 0h6v40h-6zM104 0h16a11.5 11.5 0 0 1 0 23h-16v-6h16a5.5 5.5 0 0 0 0-11h-16zM116 23h7.5L136 40h-7.5zM146 40L160 0h8l14 40h-6.5L164 7.5 152.5 40z"/><rect x="161" y="27" width="6" height="6" fill="#6d5cff"/></g></svg><p>ホームページのご提案</p></div></header>
@@ -17,10 +17,11 @@
   <p class="to">JECOM株式会社 様</p>
   <h1>新しいホームページの<br><span class="holo">イメージ</span>を作りました</h1>
   <p class="lead">御社のホームページを全ページ拝見し、スマホで見たときに気になった点を直した、新しいホームページを先にお作りしました。「揺れても倒れない」製品が伝わるよう、トップの写真は地震のように揺れたあと、ダンパーが効いたように止まります。</p>
-  <div class="show has-pc">
-    <figure class="old"><div class="phone"><picture><source media="(min-width: 900px)" srcset="img/current-pc.png"><img src="img/current-sp.png" alt="今のホームページ"></picture></div><figcaption>今のホームページ</figcaption></figure>
-    <figure class="new"><a href="../" target="_blank" rel="noopener"><div class="frame"><div class="phone"><picture><source media="(min-width: 900px)" srcset="img/demo-pc.png"><img src="img/demo-sp.png" alt="新しいホームページのイメージ"></picture></div></div><figcaption>新しいイメージ</figcaption><span class="tap">押して見る</span></a></figure>
-  </div>
+  <figure class="show has-pc"><a href="../" target="_blank" rel="noopener">
+    <div class="browser"><div class="screen"><img src="img/demo-pc.png" alt="新しいホームページのイメージ（パソコン）"></div></div>
+    <div class="phone"><img src="img/demo-sp.png" alt="新しいホームページのイメージ（スマホ）"></div>
+    <span class="tap">押して見る</span>
+  </a><figcaption>新しいイメージ<span class="nw">（パソコン・スマホ）</span></figcaption></figure>
   <a class="btn btn-main" id="hero-btn" href="../" target="_blank" rel="noopener">新しいホームページを見る →<small>（デモサイト）</small></a>
   <p class="note">今のホームページの全ページ（83ページ）を、同じ内容のまま新しいデザインで作りました。写真・文章は今のホームページのものです。</p>
 </section>
@@ -145,26 +146,35 @@
 </section>
 
 <section class="block strengths">
-  <h2>ZEIRAの強みは、<br><span class="holo">見せ方の技術</span>と<span class="nw"><span class="holo">続けやすい料金</span>です</span></h2>
+  <h2>ZEIRAの<span class="holo">3つの強み</span></h2>
   <div class="str">
     <p class="str-no">01　見せ方の技術</p>
     <h3>開いた瞬間に、中身が伝わるホームページを</h3>
     <p>画面の動きや見せ方の技術を強みにしています。ひと目で何の会社か分かり、見た方の記憶に残るホームページをお作りします。</p>
     <p class="str-ex">このイメージでも、トップの写真が地震のように揺れたあと、ダンパーが効いたようにスッと止まります。「揺れても倒れない」製品を、開いた瞬間に感じていただけるようにしました。</p>
-    <ul class="checks">
-      <li>スマホ・パソコン・iPhone の画面で、<strong>全ページの表示を確かめてから</strong>公開します</li>
-      <li>公開した後も<strong>24時間見張り</strong>、止まった時はすぐに直します</li>
-    </ul>
     <a class="btn btn-sub" href="https://zeira.jp/" target="_blank" rel="noopener">見本と技術を見る →<small>（ZEIRAのホームページ）</small></a>
   </div>
+  <div class="str">
+    <p class="str-no">02　公開した後も、まかせて安心</p>
+    <h3>管理も修正も、こちらで引き受けます</h3>
+    <p>公開して終わりではありません。月額の中で、次のことをすべて行います。</p>
+    <ul class="svc">
+      <li><strong>24時間の見張り</strong><span>止まった時は自動で直します。直前の修正が原因なら、自動で元に戻します</span></li>
+      <li><strong>修正は月3回まで無料</strong><span>文字・写真の入れ替えなどを、メールで一言いただくだけで</span></li>
+      <li><strong>毎月のレポート</strong><span>見に来た人の数・よく見られたページ・検索の状況と、改善の提案</span></li>
+      <li><strong>サーバー・ドメインの管理</strong><span>鍵マーク（https）・不正アクセスへの対策・バックアップ・ドメインの期限のお知らせ</span></li>
+      <li><strong>問い合わせの受け取り</strong><span>フォームからの問い合わせを届け、届かない時は送り直します</span></li>
+      <li><strong>アクセス解析と検索の設定</strong><span>Google の検索に正しく出るための設定まで</span></li>
+    </ul>
+  </div>
   <div class="price">
-    <p class="str-no">02　続けやすい料金</p>
+    <p class="str-no">03　続けやすい料金</p>
     <h2>作るのも、続けるのも、<br>この料金だけです</h2>
     <div class="price-row">
       <div><p class="price-k">サイト制作費</p><p class="price-v">50,000円</p></div>
       <div><p class="price-k">月額</p><p class="price-v">8,000円</p></div>
     </div>
-    <p class="price-inc">月額に、サーバー・セキュリティ対策・<span class="nw">24時間の監視</span>・<strong>月3回の修正</strong>・毎月のレポートが含まれます（税込）</p>
+    <p class="price-inc">上の<strong>公開した後のサービスは、すべて月額に含まれます</strong>（税込）</p>
     <p class="price-mkt">一般的な目安：制作会社に頼むと30〜100万円（5〜10ページ）、管理を任せると月2〜5万円（解説記事より・2026年11月調べ）</p>
     <a class="btn btn-light" href="https://zeira.jp/#price" target="_blank" rel="noopener">料金のくわしい条件を見る →<small>（ZEIRAのホームページ）</small></a>
   </div>
