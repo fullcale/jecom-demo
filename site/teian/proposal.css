@@ -54,19 +54,21 @@ body { background:
 .hero h1 { font-size: clamp(1.75rem, 7.4vw, 2.6rem); }
 .lead { color: var(--text); }
 
-/* 今のサイトと新しいイメージを同じ大きさで並べる（2026-11-22 オーナー「今のホームページを小さく見せるのはよくない」） */
-.show { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: end; margin: 28px 0 22px; }
-.show figure { margin: 0; text-align: center; }
-.show a { text-decoration: none; display: block; position: relative; }
-.phone { border-radius: 18px; overflow: hidden; aspect-ratio: 390 / 760; background: #fff; }
-.phone img, .phone picture { width: 100%; height: 100%; object-fit: cover; object-position: top; }
-.phone picture { display: block; }
-.old .phone { border: 5px solid #3a3f4a; border-radius: 16px; }
-.new .frame { padding: 4px; border-radius: 26px; background: var(--holo); box-shadow: 0 30px 60px -24px rgba(35, 80, 255, .45); }
-.new .phone { border: 5px solid var(--ink); border-radius: 22px; }
-figcaption { font-size: .86rem; font-weight: 700; margin-top: 10px; color: var(--sub); }
-.new figcaption { color: var(--ink); font-size: .95rem; }
-.tap { position: absolute; left: 50%; top: 58%; transform: translateX(-50%); background: var(--ink); color: #fff; font-size: .85rem; font-weight: 700; padding: 8px 18px; border-radius: 99px; white-space: nowrap; box-shadow: 0 8px 20px rgba(11, 15, 25, .35); }
+/* 表紙：新しいイメージのパソコンとスマホの画面を重ねて見せる（2026-11-22 オーナー「今のホームページいらない。新しいPCとスマホのサイトどっちも表示」） */
+.show { margin: 28px 0 22px; text-align: center; }
+.show a { display: block; position: relative; text-decoration: none; }
+.browser { padding: 4px; border-radius: 16px; background: var(--holo); box-shadow: 0 30px 60px -24px rgba(35, 80, 255, .45); }
+.has-pc .browser { width: 86%; }
+.screen { border-radius: 12px; overflow: hidden; background: #fff; border-top: 18px solid #e6e8f0; aspect-ratio: 1280 / 800; position: relative; }
+.screen::before { content: ""; position: absolute; top: -12px; left: 10px; width: 6px; height: 6px; border-radius: 50%; background: #ff6f6f; box-shadow: 10px 0 #ffc24d, 20px 0 #3fd07a; }
+.screen img, .phone img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.phone { border: 5px solid var(--ink); border-radius: 22px; overflow: hidden; aspect-ratio: 390 / 760; background: #fff; box-shadow: 0 24px 40px -18px rgba(11, 15, 25, .5); }
+.show:not(.has-pc) .phone { width: 62%; margin: 0 auto; }
+.has-pc a { padding-bottom: 14%; }
+.has-pc .phone { position: absolute; right: 0; bottom: 0; width: 27%; border-width: 4px; border-radius: 16px; }
+.show figcaption { font-size: .95rem; font-weight: 700; margin-top: 12px; color: var(--ink); }
+.tap { position: absolute; left: 43%; top: 40%; transform: translate(-50%, -50%); background: var(--ink); color: #fff; font-size: .85rem; font-weight: 700; padding: 8px 18px; border-radius: 99px; white-space: nowrap; box-shadow: 0 8px 20px rgba(11, 15, 25, .35); }
+.show:not(.has-pc) .tap { left: 50%; top: 55%; }
 .note { font-size: .88rem; color: var(--sub); margin-top: 14px; }
 
 /* ボタン */
@@ -111,6 +113,13 @@ figcaption { font-size: .86rem; font-weight: 700; margin-top: 10px; color: var(-
 .str h3 { font-size: 1.25rem; font-weight: 900; }
 .str-ex { background: #f1f3fb; border-radius: 12px; padding: 12px 14px; color: var(--ink); font-weight: 700; }
 .str .btn-sub { margin-top: 4px; }
+.svc { list-style: none; padding: 0; margin: 0 0 12px; display: grid; gap: 10px; }
+.svc li { background: #f4f6fc; border-radius: 14px; padding: 12px 14px 12px 44px; position: relative; }
+.svc li::before { content: "✓"; position: absolute; left: 12px; top: 13px; width: 22px; height: 22px; border-radius: 50%; background: var(--holo); color: #fff; font-weight: 900; font-size: .8rem; display: grid; place-items: center; }
+.svc strong, .svc span { display: block; }
+.svc span { font-size: .92rem; color: var(--text); }
+.price { margin-top: 18px; }
+@media (min-width: 900px) { .svc { grid-template-columns: 1fr 1fr; } }
 
 /* 乗り換え */
 .checks { list-style: none; padding: 0; margin: 0; }
@@ -155,13 +164,9 @@ figcaption { font-size: .86rem; font-weight: 700; margin-top: 10px; color: var(-
 @media (min-width: 900px) {
   section, .foot, .top-in { max-width: 820px; }
   .cta { max-width: 788px; }
-  .show { gap: 28px; max-width: 620px; margin-left: auto; margin-right: auto; }
-  /* パソコンの画面を並べる時は、表紙のこの部分だけ広げる（ブラウザの枠の形） */
-  .show.has-pc { max-width: none; width: min(1160px, calc(100vw - 48px)); margin-left: 50%; transform: translateX(-50%); gap: 36px; }
-  .show.has-pc .phone { aspect-ratio: 1280 / 800; border-radius: 12px; border-width: 22px 0 0; }
-  .show.has-pc .old .phone { border-color: #3a3f4a; border-width: 22px 0 0; }
-  .show.has-pc .new .frame { border-radius: 16px; }
-  .show.has-pc .tap { top: 50%; }
+  .show:not(.has-pc) { max-width: 420px; margin-left: auto; margin-right: auto; }
+  /* パソコン：表紙の画面だけ少し広げる */
+  .show.has-pc { max-width: none; width: min(1000px, calc(100vw - 48px)); margin-left: 50%; transform: translateX(-50%); }
   .btn { max-width: 440px; margin-left: auto; margin-right: auto; }
   .card-shot { max-width: 460px; }
   .bar { justify-content: center; }
